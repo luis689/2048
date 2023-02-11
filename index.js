@@ -50,6 +50,12 @@ function updateTile(tile,num) {
 document.addEventListener("keyup", (e) => {
     if (e.code == "ArrowLeft"){
         slideLeft();
+    } else if (e.code == "ArrowRight"){
+        slideRight();
+    } else if (e.code == "ArrowUp"){
+        slideUp();
+    } else if (e.code == "ArrowDown"){
+        slideDown();
     }
 })
 
@@ -88,6 +94,56 @@ function slideLeft(){
         for (let j = 0; j < columns; j++){
             let tile = document.getElementById(i.toString() + "-" + j.toString());
             let num = board[i][j];
+            updateTile(tile, num);
+        }
+    }
+}
+
+function slideRight(){
+    for (let i = 0; i < rows; i++){
+        let row = board[i];
+        row.reverse();
+        row = slide(row);
+        row.reverse();
+        board[i] = row;
+
+        for (let j = 0; j < columns; j++){
+            let tile = document.getElementById(i.toString() + "-" + j.toString());
+            let num = board[i][j];
+            updateTile(tile, num);
+        }
+    }
+}
+
+function slideUp(){
+    for (let i = 0; i < columns; i++){
+        let row = [board[0][i], board[1][i], board[2][i], board[3][i]];
+        row = slide(row);
+        board[0][i] = row[0];
+        board[1][i] = row[1];
+        board[2][i] = row[2];
+        board[3][i] = row[3];
+
+        for (let j = 0; j < columns; j++){
+            let tile = document.getElementById(j.toString() + "-" + i.toString());
+            let num = board[j][i];
+            updateTile(tile, num);
+        }
+    }
+}
+
+function slideDown(){
+    for (let i = 0; i < columns; i++){
+        let row = [board[3][i], board[2][i], board[1][i], board[0][i]];
+        row = slide(row);
+        board[3][i] = row[0];
+        board[2][i] = row[1];
+        board[1][i] = row[2];
+        board[0][i] = row[3];
+
+        for (let j = 0; j < columns; j++){
+            let tile = document.getElementById(j.toString() + "-" + i.toString());
+            let num = board[j][i];
             updateTile(tile, num);
         }
     }
